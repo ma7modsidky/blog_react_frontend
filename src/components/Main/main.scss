@@ -1,0 +1,17 @@
+@import '../../assets/scss/_mixins.scss';
+
+.main {
+    margin: 2rem auto;
+    max-width: 1124px;
+    padding: 1rem 1.5rem;
+    @include breakpoint-down(medium) {
+    }
+}
+
+h1,h2,h3,p{
+    margin: 0;
+    margin-bottom: 0.5rem;
+}
+
+
+
