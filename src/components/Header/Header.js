@@ -4,31 +4,43 @@ import {Link} from 'react-router-dom'
 
 import './header.scss'
 import AuthContext from '../../context/AuthContext'
+import axiosInstance from '../../axios'
 
 export default function Header() {
 	let {user , logout} = useContext(AuthContext)
-	
-	
+	let [data, setData] = useState({categories:[],dataIsReturned:false})
+	useEffect(function(){
+		axiosInstance
+		.get(`categories`)
+		.then(res=>{
+			setData({categories:res.data, dataIsReturned:true})
+			console.log(res.data)
+		})
+		.catch(err=>{
+			console.log(err)
+		})
+	},[])
 	return (
 		<header className="header">
 			<div className="header__top">
 				<div className="header__logo">
 					<img src={logo} alt="logo" />
 				</div>
-				<a href="#" id="btnHamburger" className="header__toggle">
+				<a  id="btnHamburger" className="header__toggle">
 					<span></span>
 					<span></span>
 					<span></span>
 				</a>
 			</div>
 			<nav className="header__bottom">
+				{data.dataIsReturned?
 				<ul className='categories'>
-					<li><a href='#'>Culture</a></li>
-					<li><a href='#'>Fashion</a></li>
-					<li><a href='#'>Health</a></li>
-					<li><a href='#'>Science</a></li>
-					<li><a href='#'>Tech</a></li>
-				</ul>
+					{data.categories.map((item)=>(
+						<li key={item.id}><Link to={`/category/${item.name}`}>{item.name}</Link></li>
+					))}
+				</ul>:
+				null
+				}
 				{user?
 				<ul>
 					<li style={{color:'white'}}><Link to="/profile">Welcome {user.username}</Link></li>

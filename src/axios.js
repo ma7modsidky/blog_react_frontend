@@ -1,6 +1,6 @@
 import axios from 'axios'
-const baseURL = 'http://127.0.0.1:8000/api/'
-
+const baseURL = 'https://blog-vital.herokuapp.com/api/'
+// const baseURL = 'http://127.0.0.1:8000/api/'
 const axiosInstance = axios.create({
     baseURL: baseURL,
     timeout: 5000,
@@ -36,11 +36,10 @@ axiosInstance.interceptors.response.use(
 			error.response.status === 401 &&
 			originalRequest.url === baseURL + 'token/refresh/'
 		) {
-			console.log('need new refresh')
+			console.log('need new refresh');
 			window.location.href = '/login/';
 			return Promise.reject(error);
 		}
-
 		if (
 			error.response.status === 401 &&
 			error.response.statusText === 'Unauthorized' &&

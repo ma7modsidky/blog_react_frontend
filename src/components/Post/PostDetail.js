@@ -1,12 +1,13 @@
 import React from 'react'
 import userimg from '../../assets/imgs/no_profile_picture.webp'
+import postimg from '../../assets/imgs/unavailable-image.jpg'
+
 import {AiFillFacebook,AiOutlineTwitter,AiOutlineTag} from 'react-icons/ai'
 import {FaPinterest,FaGooglePlusG} from 'react-icons/fa'
 import { useEffect , useState, useContext } from 'react'
 import axiosInstance from '../../axios';
 import AuthContext from '../../context/AuthContext'
 import {Link} from "react-router-dom"
-import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 
@@ -42,7 +43,7 @@ const Comments = (props) => {
     const handleChange = (e) => {
 		setNewCommentData({
 			...newCommentinital,
-			body : e.target.value.trim(),
+			body : e.target.value,
 		});
 	};
     const createComment = (e) =>{
@@ -57,8 +58,8 @@ const Comments = (props) => {
             console.log('now testing adding comment', res)
             res.data.author = {
                 'user_name': user.username}
-            res.data.author.image = user.profile_image?user.profile_image:userimg
-            // res.data.author.image = 'http://127.0.0.1:8000' + user.profile_image
+            res.data.author.image = userimg
+            // res.data.author.image = user.profile_image?`http://127.0.0.1:8000${user.profile_image}`:userimg
             setComments([...comments, res.data])
             setNewCommentData(newCommentinital)
             setVisible(comments.length+1)
@@ -114,7 +115,9 @@ export default function PostDetail(props) {
         .then((res) => {
             console.log(res)
             setData({post: res.data , dataIsReturned : true})})
-        .catch(error => console.log(error.response.status , error.response.statusText))    
+        .catch(error => {
+            alert(error.response.statusText)
+        })    
         
     },[])
 
@@ -128,23 +131,23 @@ export default function PostDetail(props) {
             </div>
             :
             <div>
-                
-            {!dataIsReturned ?
-            <h1>please wait</h1>:
+            {!data.dataIsReturned ?
+            <h1>please wait loading</h1>:
             <div>
-                <h1 className='PostDetail_title'>{post.title}</h1>
+                <h1 className='PostDetail_title'>{data.post.title}</h1>
                 <div className="PostDetail_wrapper">
-                    <p className='PostDetail_brief'></p>
+                    <p className='PostDetail_brief'>{data.post.brief}</p>
                     <SocialShare />
-                    <div className='PostDetail_author'>{post.author}<a href="#"></a></div>
-                    <div className='PostDetail_date'>{post.updated}</div>
-                    <div className="PostDetail_image"><img src={post.image} alt="post image" /></div>
-                    {/* <p className='PostDetail_body'>{post.body}</p> */}
-                    {/* <ReactQuill theme="snow" value={post.body}/> */}
-                    <div className='PostDetail_body' dangerouslySetInnerHTML={{ __html: post.body }} />
-                    <Tags tags={[post.category]}/>
+                    <div className='PostDetail_author'>{data.post.author}<a href="#"></a></div>
+                    <div className='PostDetail_date'>{data.post.updated}</div>
+                    {post.image?
+                    <div className="PostDetail_image"><img src={data.post.image} alt="post image" /></div>:
+                    null
+                    }
+                    <div className='PostDetail_body' dangerouslySetInnerHTML={{ __html: data.post.body }} />
+                    <Tags tags={[data.post.category]}/>
                     <SocialShare />
-                    <Comments data={post.comments} postId={postId} updateComments={setData}/>
+                    <Comments data={data.post.comments} postId={postId} updateComments={setData}/>
                 </div>
             </div>
             }

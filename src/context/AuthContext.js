@@ -49,28 +49,14 @@ export const AuthProvider = ({children}) => {
         history.push('/login')
     }
 
-    //no need for this function now as we used axios interceptors
-    // let updateToken = async ()=> {
-    //     let response = await axiosInstance.post(`/token/refresh/`, {
-	// 			'refresh':authTokens?.refresh
-	// 		})
-    //     let data = response.data    
-    //     if (response.status === 200){
-    //         setAuthTokens(data)
-    //         setUser(jwt_decode(data.access))
-    //         localStorage.setItem('access_token', response.data.access);
-	// 		localStorage.setItem('refresh_token', response.data.refresh);
-    //     }else{
-    //         logout()
-    //     }
-    // }
-
     let contextData = {
         user:user,
+        setUser: setUser,
         authTokens:authTokens,
         login:login,
         logout:logout,
-        err:err
+        err:err,
+        setErr:setErr,
     }
 
     return(

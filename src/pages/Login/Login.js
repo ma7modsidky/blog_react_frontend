@@ -7,11 +7,11 @@ import './login.scss'
 export default function Login() {
     // For toggle between login and sign up page
     const [toggle, setToggle] = useState(false)
-    const toggleLogin = (e) =>{
+    const toggleLogin = () =>{
         toggle ? setToggle(false):setToggle(true)
     }
     /////////////////////////////////////////////
-    let {login , err } = useContext(AuthContext)
+    let {login , err , setErr} = useContext(AuthContext)
     const history = useHistory();
     // For controlling the login form and object.freeze is like a security measure
     const initialFormData = Object.freeze({
@@ -38,7 +38,6 @@ export default function Login() {
 			...signUpData,
 			[e.target.name]: e.target.value.trim(),
 		});
-        console.log(signUpData)
 	};
     //for handling the submit button
     const handleSubmit = (e) => {
@@ -56,29 +55,35 @@ export default function Login() {
             password : signUpData.password
         })
         .then((res) => {
-            history.push('/login')
+            toggleLogin()
             alert(
 				'You have successfully created an account please login to continue'
 			);
         })
-        .catch(err=> console.log(err.response))
+        .catch(err=> {
+            setErr(err)
+
+        })
     }
     return (
         <div className="login-page">
             <div className="form">
             {toggle?
                 <form className="register-form">
-                    <input type="text" placeholder="Email address" name='email' onChange={handleSignUpChange}/>
-                    <input type="text" placeholder="Username" name='user_name' onChange={handleSignUpChange}/>
-                    <input type="password" placeholder="Password" name='password' onChange={handleSignUpChange}/>
-                    <input type="password" placeholder="Confirm password"  name='password2' onChange={handleSignUpChange}/>
+                    <input type="text" placeholder="Email address" name='email' onChange={handleSignUpChange} value={signUpData.email}/>
+                    <input type="text" placeholder="Username" name='user_name' onChange={handleSignUpChange} value={signUpData.user_name}/>
+                    <input type="password" placeholder="Password" name='password' onChange={handleSignUpChange} value={signUpData.password}/>
+                    <input type="password" placeholder="Confirm password"  name='password2' onChange={handleSignUpChange} value={signUpData.password2}/>
+                    {err?
+                    // <p style={{color:'red'}}>Wrong email, username or password. Try again or click Recover password’ to reset it.</p>:null}
+                    <p style={{color:'red'}}>{err.response.data.detail}</p>:null}
                     <button onClick={handleSignUp}>create</button>
                     <p className="message">Already registered? <a onClick={toggleLogin}>Sign In</a></p>
                 </form>
                 :
                 <form className="login-form" >
-                    <input type="text" placeholder="Email or Username" name="email" onChange={handleChange}/>
-                    <input type="password" placeholder="Password" name="password" onChange={handleChange}/>
+                    <input type="text" placeholder="Email or Username" name="email" onChange={handleChange} value={formData.email}/>
+                    <input type="password" placeholder="Password" name="password" onChange={handleChange} value={formData.password}/>
                     <button onClick={handleSubmit}>login</button>
                     {err?
                     // <p style={{color:'red'}}>Wrong email, username or password. Try again or click Recover password’ to reset it.</p>:null}

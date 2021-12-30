@@ -1,17 +1,17 @@
-import React, { useEffect , useState, useContext } from 'react'
 
 import Login from '../../pages/Login/Login'
 import Home from '../../pages/Home/Home'
 import Profile from '../../pages/Profile/Profile'
 import './main.scss'
-import axiosInstance from '../../axios';
+
 import {
   Switch,
   Route,
-  Link
 } from "react-router-dom";
 import PostDetail from '../Post/PostDetail';
-import AuthContext from '../../context/AuthContext'
+import PostForm from '../Post/PostForm'
+import PostEditForm from '../Post/PostEditForm'
+import PostList from '../../pages/PostList/PostList'
 
 
 
@@ -31,9 +31,14 @@ export default function Main() {
                     <Route path="/login">
                         <Login />
                     </Route>
-                     <Route path="/profile">
+                    <Route path="/profile">
                         <Profile />
                     </Route>
+                    <Route path="/new_post">
+                        <PostForm />
+                    </Route>
+                    <Route path="/edit_post/:id" component={PostEditForm}/>
+                    <Route path="/category/:name" component={PostList}/>
                 </Switch>
             </main>
         
