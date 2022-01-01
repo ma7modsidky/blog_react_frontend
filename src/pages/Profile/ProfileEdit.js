@@ -18,7 +18,7 @@ function ProfileEdit() {
 	});
     const [formData, updateFormData] = useState(initialFormData);
     const [profilePhoto, setProfilePhoto] = useState(null);
-    const [profilePhotoURL, setProfilePhotoURL] = useState(`${user.image}/`);
+    const [profilePhotoURL, setProfilePhotoURL] = useState(`${user.image}`);
     const [msg, setMsg] = useState(null);
 
     function goBack(){
@@ -40,13 +40,13 @@ function ProfileEdit() {
         axiosInstance
         .patch(`user/update_user/${user.user_id}/`, fdata, config)
         .then(res => {
-            console.log('res data', res.data)
             setUser({...user,
             'about': res.data['about'],
             'first_name': res.data['first_name'],
             'last_name' : res.data['last_name'] ,
-            'profile_image': res.data['image']})
-            console.log('updated user', user)
+            'profile_image': res.data['image'],
+            'image': res.data['image'],})
+            goBack()
             
         })
         .catch(err => {

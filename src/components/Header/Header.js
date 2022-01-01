@@ -45,7 +45,7 @@ export default function Header() {
 				<ul>
 					<li style={{color:'white'}}><Link to="/profile">Welcome {user.username}</Link></li>
 					<li><Link to="/">Home</Link></li>
-					<li onClick={logout}><Link>Logout</Link></li> :
+					<li onClick={logout}><Link>Logout</Link></li>
 				</ul>:
 				<ul>
 					<li><Link to="/">Home</Link></li>

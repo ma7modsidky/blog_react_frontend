@@ -24,7 +24,6 @@ function ProfileInfo({user}) {
                 <h3>{user.first_name} {user.last_name}</h3>
                 <p>{user.about}</p>
                 <Link to="profile/edit" className='btn'>Edit information</Link>
-                {/* <a href="#" >Edit information</a> */}
             </div>
             
         </div>
@@ -109,7 +108,7 @@ function Profile() {
                 <Route  path="/profile/" exact>
                     <h1>Your Profile</h1>
                     {userData.dataIsReturned?
-                    <ProfileInfo user={userData.user}/>:
+                    <ProfileInfo user={user}/>:
                     <p>loading</p>
                     }
                     <h2>Your Posts ({data.posts.length}) <Link to='/new_post' className='btn' style={{float:'right',margin:'0', backgroundColor:'green'}}>New Post</Link></h2> 
