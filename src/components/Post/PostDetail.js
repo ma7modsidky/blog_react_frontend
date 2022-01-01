@@ -105,7 +105,7 @@ const Comments = (props) => {
 
 export default function PostDetail(props) {
     const postId = props.match.params.id
-    const [data, setData] = useState({dataIsReturned: false });
+    const [data, setData] = useState({post: null,dataIsReturned: false });
     const {user} = useContext(AuthContext)
 
     useEffect(() =>{
@@ -113,8 +113,10 @@ export default function PostDetail(props) {
         axiosInstance
         .get(''+ postId)
         .then((res) => {
-            console.log(res)
-            setData({post: res.data , dataIsReturned : true})})
+            setData({...data,post: res.data , dataIsReturned : true})
+            console.log(data)
+        })
+           
         .catch(error => {
             alert(error.response.statusText)
         })    
