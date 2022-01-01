@@ -76,7 +76,7 @@ const Comments = (props) => {
                 <div className="comment_head">
                     <div className="usrImg">
                         {comment.author.image?
-                        <img src={comment.author.image} alt="profile_image" />:
+                        <img src={`${comment.author.image}`} alt="profile_image" />:
                         <img src={userimg} alt="no_profile_image" />
                         }
                     </div>
