@@ -103,23 +103,30 @@ const Comments = (props) => {
 
 export default function PostDetail(props) {
     const postId = props.match.params.id
-    const [data, setData] = useState({'postID':postId,'post': {},'dataIsReturned': false});
+    const [data, setData] = useState({'post': null});
+    const [loading, setLoading] = useState(true);
+    const [err, setErr] = useState(null);
     useEffect(() =>{
         axiosInstance
         .get(''+ postId)
         .then(res => {
-            setData({...data,'post': res.data , 'dataIsReturned':true})
+            setData({'post': res.data})
+            setLoading(false)
         })
         .catch(error => {
-            alert('errrror')
-            alert(error)
+            console.log('error fetching data', err)
+            setErr(error)
         })
-    },[data.postId])
-    const { dataIsReturned, post , postID } = data
-    console.log(dataIsReturned, post , postID)
+        .finally(()=>{
+            setLoading(false)
+        })
+        console.log(loading , post)
+    },[])
+    const {post} = data
+    
     return (        
         <div className='PostDetail'>
-            {dataIsReturned ?
+            {!loading?
             <div>
                 <h1 className='PostDetail_title'>{post.title}</h1>
                 <div className="PostDetail_wrapper">
@@ -137,7 +144,7 @@ export default function PostDetail(props) {
                     <Comments data={post.comments} postId={postId}/>
                 </div>
             </div>:
-            <p>{dataIsReturned}</p>
+            <p>loading</p>
             }
         </div>
         
