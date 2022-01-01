@@ -117,9 +117,7 @@ export default function PostDetail(props) {
             console.log('error fetching data', err)
             setErr(error)
         })
-        .finally(()=>{
-            setLoading(false)
-        })
+        
         console.log(loading , post)
     },[])
     const {post} = data
@@ -141,7 +139,7 @@ export default function PostDetail(props) {
                     <div className='PostDetail_body' dangerouslySetInnerHTML={{ __html: post.body }} />
                     <Tags tags={[post.category]}/>
                     <SocialShare />
-                    <Comments data={post.comments} postId={postId}/>
+                    {/* <Comments data={post.comments} postId={postId}/> */}
                 </div>
             </div>:
             <p>loading</p>
