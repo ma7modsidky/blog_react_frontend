@@ -19,13 +19,11 @@ function PostEditForm() {
         axiosInstance
         .get(''+ id)
         .then((res) => {
-            console.log(res.data)
             setValue(res.data.body)
             setData({post: res.data , dataIsReturned : true})
             setImage(res.data.image)
             setImageURL(res.data.image)
         })
-            
         .catch(error => console.log(error.response.status , error.response.statusText)) 
     },[])
     
@@ -74,7 +72,6 @@ function PostEditForm() {
     return (
         <div className='PostForm'>
             <h1>Edit Post</h1>
-            
             {data.dataIsReturned?
             <form action="">
                 <label htmlFor="title" >Title</label>
