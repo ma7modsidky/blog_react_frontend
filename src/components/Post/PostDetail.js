@@ -55,11 +55,9 @@ const Comments = (props) => {
             body : newCommentData.body,
         })
         .then((res) => {
-            console.log('now testing adding comment', res)
             res.data.author = {
                 'user_name': user.username}
             res.data.author.image = userimg
-            // res.data.author.image = user.profile_image?`http://127.0.0.1:8000${user.profile_image}`:userimg
             setComments([...comments, res.data])
             setNewCommentData(newCommentinital)
             setVisible(comments.length+1)
@@ -105,47 +103,41 @@ const Comments = (props) => {
 
 export default function PostDetail(props) {
     const postId = props.match.params.id
-    const [data, setData] = useState({post: null,dataIsReturned: false });
-    const {user} = useContext(AuthContext)
-
+    const [data, setData] = useState({'postID':postId,'post': {},'dataIsReturned': false});
     useEffect(() =>{
-        console.log('request started')
         axiosInstance
         .get(''+ postId)
-        .then((res) => {
-            setData({...data,post: res.data , dataIsReturned : true})
-            console.log(data)
+        .then(res => {
+            setData({...data,'post': res.data , 'dataIsReturned':true})
         })
-           
         .catch(error => {
-            alert(error.response.statusText)
-        })    
-        
-    },[])
-
-    
-    const { dataIsReturned, post} = data;
+            alert('errrror')
+            alert(error)
+        })
+    },[data.postId])
+    const { dataIsReturned, post , postID } = data
+    console.log(dataIsReturned, post , postID)
     return (        
         <div className='PostDetail'>
-            {!data.dataIsReturned ?
-            <h1>Please wait</h1>:
+            {dataIsReturned ?
             <div>
-                <h1 className='PostDetail_title'>{data.post.title}</h1>
+                <h1 className='PostDetail_title'>{post.title}</h1>
                 <div className="PostDetail_wrapper">
-                    <p className='PostDetail_brief'>{data.post.brief}</p>
+                    <p className='PostDetail_brief'>{post.brief}</p>
                     <SocialShare />
-                    <div className='PostDetail_author'>{data.post.author}<a href="#"></a></div>
-                    <div className='PostDetail_date'>{data.post.updated}</div>
+                    <div className='PostDetail_author'>{post.author}<a href="#"></a></div>
+                    <div className='PostDetail_date'>{post.updated}</div>
                     {post.image?
-                    <div className="PostDetail_image"><img src={data.post.image} alt="post image" /></div>:
+                    <div className="PostDetail_image"><img src={post.image} alt="post image" /></div>:
                     null
                     }
-                    <div className='PostDetail_body' dangerouslySetInnerHTML={{ __html: data.post.body }} />
-                    <Tags tags={[data.post.category]}/>
+                    <div className='PostDetail_body' dangerouslySetInnerHTML={{ __html: post.body }} />
+                    <Tags tags={[post.category]}/>
                     <SocialShare />
-                    <Comments data={data.post.comments} postId={postId} updateComments={setData}/>
+                    <Comments data={post.comments} postId={postId}/>
                 </div>
-            </div>
+            </div>:
+            <p>{dataIsReturned}</p>
             }
         </div>
         

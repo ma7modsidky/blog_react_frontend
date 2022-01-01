@@ -14,7 +14,7 @@ export default function Header() {
 		.get(`categories`)
 		.then(res=>{
 			setData({categories:res.data, dataIsReturned:true})
-			console.log(res.data)
+			
 		})
 		.catch(err=>{
 			console.log(err)

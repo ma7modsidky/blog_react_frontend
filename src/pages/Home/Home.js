@@ -8,19 +8,21 @@ function Home() {
     useEffect(() =>{
         axiosInstance
         .get(``)
+        // .then((res) => {
+        //     setData({'posts' : res.data, 'featured': res.data[0] , dataIsReturned : true})
+        // })
         .then((res) => {
-            console.log(res)
-            setData({'posts' : res.data, 'featured': res.data[0] , dataIsReturned : true})})
+            setData( {'posts' : res.data, 'featured': res.data[0] , dataIsReturned : true})
+        })
         .catch(err => {
             console.log(err)
             setData({posts:[], dataIsReturned: false})
         }
         )
-
-
-    },[])
+        console.log(data)
+    },[data.dataIsReturned])
     const { dataIsReturned, posts , featured } = data;
-
+    
     return (
             <div className='Home'>
             {dataIsReturned?

@@ -92,13 +92,12 @@ function Profile() {
         axiosInstance
         .get(`user/${user.user_id}/`)
         .then(res=> {
-            setUserData({user:res.data, dataIsReturned:true})
             setUser({...user, image:res.data.image})
+            setUserData({user:res.data, dataIsReturned:true})
             
         })
         .catch(err => {
             console.log(err)
-            alert('something went wrong')
         })
 
     },[])
