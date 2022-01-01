@@ -125,14 +125,8 @@ export default function PostDetail(props) {
     const { dataIsReturned, post} = data;
     return (        
         <div className='PostDetail'>
-            {!user?
-            <div>
-                <h3>Please <Link to={'/login'} >Login</Link> to view this post</h3>
-            </div>
-            :
-            <div>
             {!data.dataIsReturned ?
-            <h1>please wait loading</h1>:
+            <h1>Please wait</h1>:
             <div>
                 <h1 className='PostDetail_title'>{data.post.title}</h1>
                 <div className="PostDetail_wrapper">
@@ -151,7 +145,6 @@ export default function PostDetail(props) {
                 </div>
             </div>
             }
-            </div>}
         </div>
         
     )
