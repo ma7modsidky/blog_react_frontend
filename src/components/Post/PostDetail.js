@@ -123,7 +123,7 @@ export default function PostDetail(props) {
     },[])
     const {post} = data
     if(loading) return 'loading'
-    if(err) return 'error!!'
+    if(err) return `error >> ${err.response.data}`
     return (        
         <div className='PostDetail'>
     
