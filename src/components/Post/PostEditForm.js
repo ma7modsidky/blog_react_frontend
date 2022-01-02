@@ -17,11 +17,10 @@ function PostEditForm() {
     const [msg, setMsg] = useState(null);
     useEffect(()=>{
         axiosInstance
-        .get(''+ id)
+        .get(`${id}/`)
         .then((res) => {
             setValue(res.data.body)
             setData({post: res.data , dataIsReturned : true})
-            setImage(res.data.image)
             setImageURL(res.data.image)
         })
         .catch(error => console.log(error.response.status , error.response.statusText)) 
@@ -57,15 +56,15 @@ function PostEditForm() {
         if(Image){
             fdata.append('image', Image)
         }
+        console.log(fdata.toString())
         axiosInstance
-        .patch(`/${data.post.id}/`, fdata, config)
+        .patch(`${data.post.id}/`, fdata, config)
         .then(res=>{
             setMsg('Post updated succesfully')
             console.log(res)
         })
         .catch(err => {
-            setMsg('Something went wrong please try again later')
-            console.log(err)
+            setMsg(err.message.toString())
         })
         
     }
@@ -89,13 +88,14 @@ function PostEditForm() {
                 <img src={ImageURL} alt="post image" />:
                 <img src={data.post.image} alt="post image"/>
                 }
+                {msg?
+                <div className='msg' style={{color:'green'}}>{msg}</div>:
+                null}
                 <a className='btn' onClick={handleSubmit}>Submit</a>
                 <a className='btn' onClick={history.goBack} >Back</a>
             </form>:
             <p>loading</p>}
-            {msg?
-            <div className='msg'>{msg}</div>:
-            null}
+            
         </div>
     )
 }

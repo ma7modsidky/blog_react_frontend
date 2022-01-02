@@ -36,7 +36,7 @@ function ProfileHistory(props) {
     function handleDelete(e){
         
         axiosInstance
-        .delete(`/${e.target.attributes.postid.value}`)
+        .delete(`/${e.target.attributes.postid.value}/`)
         .then(res=> {
             setData({'posts': posts ,dataIsReturned : false})
             let newList = posts.filter((post)=> post.id !== e.target.attributes.postid.value)
@@ -94,7 +94,6 @@ function Profile() {
         .then(res=> {
             setUser({...user, image:res.data.image})
             setUserData({user:res.data, dataIsReturned:true})
-            
         })
         .catch(err => {
             console.log(err)
@@ -107,7 +106,7 @@ function Profile() {
                 <Route  path="/profile/" exact>
                     <h1>Your Profile</h1>
                     {userData.dataIsReturned?
-                    <ProfileInfo user={user}/>:
+                    <ProfileInfo user={userData.user}/>:
                     <p>loading</p>
                     }
                     <h2>Your Posts ({data.posts.length}) <Link to='/new_post' className='btn' style={{float:'right',margin:'0', backgroundColor:'green'}}>New Post</Link></h2> 

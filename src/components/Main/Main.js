@@ -39,6 +39,9 @@ export default function Main() {
                     <Route path="/" exact>
                         <Home/>
                     </Route>
+                    <Route path="*">
+                        <Home/>
+                    </Route>
                 </Switch>
                 
             </main>

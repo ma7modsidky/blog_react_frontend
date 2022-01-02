@@ -1,14 +1,14 @@
 import React from 'react'
 import userimg from '../../assets/imgs/no_profile_picture.webp'
-import postimg from '../../assets/imgs/unavailable-image.jpg'
+
 
 import {AiFillFacebook,AiOutlineTwitter,AiOutlineTag} from 'react-icons/ai'
 import {FaPinterest,FaGooglePlusG} from 'react-icons/fa'
 import { useEffect , useState, useContext } from 'react'
 import axiosInstance from '../../axios';
 import AuthContext from '../../context/AuthContext'
-import {Link} from "react-router-dom"
 import 'react-quill/dist/quill.snow.css';
+import { useHistory, useParams } from 'react-router-dom'
 
 
 const SocialShare = () => {
@@ -106,24 +106,23 @@ export default function PostDetail(props) {
     const [data, setData] = useState({'post': {}});
     const [loading, setLoading] = useState(true);
     const [err, setErr] = useState(null);
+    const history = useHistory()
     useEffect(() =>{
         axiosInstance
-        .get(''+ postId)
-        .then(res => {
-            // setData({'post': res.data})
-            setData({'post':res.data})
-        })
-        .catch(error => {
-            console.log('error fetching data', err)
-            setErr(error)
-        })
-        .finally(()=>{
+        .get(`${postId}/`)
+        .then((res) => {
+            setData({'post': {...res.data}})
             setLoading(false)
         })
+        .catch((error) => {
+            setErr(error)
+            alert(error)
+        })
+        
     },[])
     const {post} = data
     if(loading) return 'loading'
-    if(err) return `error >> ${err.response.data}`
+    if(err) return `error >> ${err}`
     return (        
         <div className='PostDetail'>
     
