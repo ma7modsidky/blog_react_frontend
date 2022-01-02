@@ -95,7 +95,7 @@ const Comments = (props) => {
         }
         <form>
             <h2>Post a new comment</h2>
-            <textarea name="comment" id="" cols="30" rows="10" placeholder='Enter your comment' res onChange={handleChange} value={newCommentData.body}></textarea>
+            <textarea name="comment" id="" cols="30" rows="10" placeholder='Enter your comment' onChange={handleChange} value={newCommentData.body}></textarea>
             <input type="submit" value="PUBLISH" className='submit btn' onClick={createComment} />
         </form>    
     </div>
@@ -111,7 +111,7 @@ export default function PostDetail(props) {
         .get(''+ postId)
         .then(res => {
             // setData({'post': res.data})
-            setData((data)=>({...data,'post':res.data}))
+            setData({'post':res.data})
             setLoading(false)
             
         })
@@ -119,7 +119,6 @@ export default function PostDetail(props) {
             console.log('error fetching data', err)
             setErr(error)
         })
-        // console.log(loading , post)
     },[])
     const {post} = data
     console.log(loading)

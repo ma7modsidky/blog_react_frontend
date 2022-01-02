@@ -23,7 +23,7 @@ export default function PostWrapper({title , posts}) {
                             <div className="post_info">
                                 <h3 className='post_title'>{post.title}</h3>
                                 <p  className='post_body'>{post.brief}</p>
-                                <p><a className='post_author'>{post.author}</a> - <a className='post_date'>{post.updated}</a></p>
+                                <p><span className='post_author'>{post.author}</span> - <span className='post_date'>{post.updated}</span></p>
                             </div>
                         </div>
                     </Link>

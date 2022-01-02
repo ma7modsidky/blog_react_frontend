@@ -11,7 +11,7 @@ import { AuthProvider } from './context/AuthContext'
 function App() {
   return (
     <div className="App">
-      <Router>
+      <Router basename='/'>
       <AuthProvider>
           <Header />
           <Main />
