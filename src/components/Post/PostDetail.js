@@ -103,25 +103,26 @@ const Comments = (props) => {
 
 export default function PostDetail(props) {
     const postId = props.match.params.id
-    const [data, setData] = useState({'post': null});
+    const [data, setData] = useState({'post': {}});
     const [loading, setLoading] = useState(true);
     const [err, setErr] = useState(null);
     useEffect(() =>{
         axiosInstance
         .get(''+ postId)
         .then(res => {
-            setData({'post': res.data})
+            // setData({'post': res.data})
+            setData((data)=>({...data,'post':res.data}))
             setLoading(false)
+            
         })
         .catch(error => {
             console.log('error fetching data', err)
             setErr(error)
         })
-        
-        console.log(loading , post)
+        // console.log(loading , post)
     },[])
     const {post} = data
-    
+    console.log(loading)
     return (        
         <div className='PostDetail'>
             {!loading?
@@ -142,7 +143,7 @@ export default function PostDetail(props) {
                     {/* <Comments data={post.comments} postId={postId}/> */}
                 </div>
             </div>:
-            <p>loading</p>
+            <p>loading {loading.toString()}</p>
             }
         </div>
         

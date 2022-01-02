@@ -12,8 +12,8 @@ export default function PostWrapper({title , posts}) {
             {posts && posts.length>0?
             <div className="PostWrapper_body">
                 {posts.map((post,index) => (
-                    <Link to={"/post/" + post.id} className='gridItem'>
-                        <div className="post" key={index}>
+                    <Link to={"/post/" + post.id} className='gridItem' key={index}>
+                        <div className="post">
                             <div className="post_img">
                                 {post.image?
                                 <img src={post.image} alt="post image" />:
