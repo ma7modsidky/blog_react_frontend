@@ -12,11 +12,11 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <AuthProvider>
+      <AuthProvider>
           <Header />
           <Main />
           <Footer />
-        </AuthProvider>
+      </AuthProvider>
       </Router>
     </div>
   );

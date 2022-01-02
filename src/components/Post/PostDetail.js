@@ -25,8 +25,8 @@ const SocialShare = () => {
 const Tags = (props) => (
     <div className="tags">
         <AiOutlineTag/>
-        {props.tags.map((tag)=> (
-            <span>{tag} ,</span>
+        {props.tags.map((tag, index)=> (
+            <span key={index}>{tag} ,</span>
         ))}
     </div>
 )
@@ -140,7 +140,7 @@ export default function PostDetail(props) {
                     <div className='PostDetail_body' dangerouslySetInnerHTML={{ __html: post.body }} />
                     <Tags tags={[post.category]}/>
                     <SocialShare />
-                    {/* <Comments data={post.comments} postId={postId}/> */}
+                    <Comments data={post.comments} postId={postId}/>
                 </div>
             </div>:
             <p>loading {loading.toString()}</p>
