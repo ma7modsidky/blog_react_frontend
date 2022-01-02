@@ -112,20 +112,21 @@ export default function PostDetail(props) {
         .then(res => {
             // setData({'post': res.data})
             setData({'post':res.data})
-            setLoading(false)
-            
         })
         .catch(error => {
             console.log('error fetching data', err)
             setErr(error)
         })
+        .finally(()=>{
+            setLoading(false)
+        })
     },[])
     const {post} = data
-    console.log(loading)
+    if(loading) return 'loading'
+    if(err) return 'error!!'
     return (        
         <div className='PostDetail'>
-            {!loading?
-            <div>
+    
                 <h1 className='PostDetail_title'>{post.title}</h1>
                 <div className="PostDetail_wrapper">
                     <p className='PostDetail_brief'>{post.brief}</p>
@@ -141,9 +142,6 @@ export default function PostDetail(props) {
                     <SocialShare />
                     <Comments data={post.comments} postId={postId}/>
                 </div>
-            </div>:
-            <p>loading {loading.toString()}</p>
-            }
         </div>
         
     )
