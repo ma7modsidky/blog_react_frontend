@@ -144,8 +144,9 @@
                 border-bottom: 2px dotted #364485;
                 th,
                 td {
-                    padding: 0.5rem 0;
+                    padding: 0.5rem 0.3rem;
                     flex: 1;
+                    overflow-wrap:anywhere;
                 }
             }
         }

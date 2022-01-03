@@ -36,9 +36,12 @@
         p {
             font-size: 1.2rem;
             color: #555555;
-            max-height: 7rem;
+            // max-height: 7rem;
+            @include breakpoint-down(medium) {
+                max-height: 7rem;
+            }
             overflow: clip;
-            a {
+            span {
                 color: #3B5899;
             }
         }
@@ -143,6 +146,12 @@
         @include breakpoint-down(medium) {
             font-size: 1rem;
         }
+        pre{
+            padding: 0.3rem;
+            background-color: #4e4d4d;
+            color: white;
+            overflow-x: scroll;
+        }
         
     }
     &_author {
@@ -158,6 +167,7 @@
         width: 60%;
         max-height: 25rem;
         object-fit: cover;
+        margin-bottom: 0.5rem;
         @include breakpoint-down(medium) {
             width: 100%;
         }
